@@ -1,0 +1,9 @@
+# Default ignored files
+/workspace.xml
+
+/.idea/
+*.xml
+*.iml
+/.gitignore
+/target/
+*.class
