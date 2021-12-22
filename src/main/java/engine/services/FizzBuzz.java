@@ -1,16 +1,15 @@
 package engine.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import engine.errors.FizzbuzzParamException;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import engine.errors.FizzbuzzParamException;
-import io.micrometer.core.instrument.Counter;
-import io.micrometer.core.instrument.MeterRegistry;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * FizzBuzz
@@ -33,12 +32,9 @@ public class FizzBuzz {
     /**
      * Call fizzbuzz Service with parameters
      *
-     * @param int1
-     * 	first number
-     * @param int2
-     * 	second number
-     * @param limit
-     * 	limit
+     * @param int1  first number
+     * @param int2  second number
+     * @param limit limit
      * @param str1
      * @param str2
      * @return the result of the FizzBuzz service
@@ -77,7 +73,7 @@ public class FizzBuzz {
                 listResult.add(String.valueOf(i));
             }
         }
-        LOG.info("Return result : {}",listResult);
+        LOG.info("Return result : {}", listResult);
         return listResult;
     }
 

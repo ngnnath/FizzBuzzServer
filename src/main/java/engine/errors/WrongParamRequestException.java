@@ -5,16 +5,16 @@ package engine.errors;
  */
 public class WrongParamRequestException extends RuntimeException {
 
-	public WrongParamRequestException() {
-		super();
-	}
+    public WrongParamRequestException() {
+        super();
+    }
 
-	public WrongParamRequestException(final String aMessage) {
-		super(aMessage);
-	}
+    public WrongParamRequestException(final String aMessage) {
+        super(aMessage);
+    }
 
-	public WrongParamRequestException(final String aMessage, final Throwable aCause) {
-		super(aMessage, aCause);
-	}
+    public WrongParamRequestException(final String aMessage, final Throwable aCause) {
+        super(aMessage, aCause);
+    }
 
 }

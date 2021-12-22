@@ -49,27 +49,22 @@ public class FizzBuzzController {
     /**
      * return  list of String the FizzBuzz
      *
-     * @param int1
-     * 	first number
-     * @param int2
-     * 	second number
-     * @param limit
-     * 	limit number
-     * @param str1
-     * 	First string to replace numbers multiple of int 1
-     * @param str2
-     * 	Second string to replace numbers multiple of int 2
+     * @param int1  first number
+     * @param int2  second number
+     * @param limit limit number
+     * @param str1  First string to replace numbers multiple of int 1
+     * @param str2  Second string to replace numbers multiple of int 2
      * @return
      */
     @Operation(summary = "run fizzbuzz and get the result in a list")
-    @Timed(value = "fizzbuzz.request", extraTags = { "name", "fizzbuzzTimer" })
+    @Timed(value = "fizzbuzz.request", extraTags = {"name", "fizzbuzzTimer"})
     @GetMapping(value = "/fizzbuzz/{int1}/{int2}/{limit}/{str1}/{str2}")
     public ResponseEntity<List<String>> runFizzbuzz(
             @Parameter(description = "First factor") @PathVariable(value = "int1") String int1,
             @Parameter(description = "Second factor") @PathVariable(value = "int2") String int2,
             @Parameter(description = "Upper limit of range of number") @PathVariable(value = "limit") String limit,
             @Parameter(description = "First string to replace if number is multiple of int1") @PathVariable(value = "str1") String str1,
-            @Parameter(description = "Second string to replace if number is multiple of int2")@PathVariable(value = "str2") String str2)
+            @Parameter(description = "Second string to replace if number is multiple of int2") @PathVariable(value = "str2") String str2)
             throws FizzbuzzParamException {
         LOG.info("Request with parameter [int1={},int2={},limit={},str1={},str2={}]", int1, int2, limit, str1, str2);
         Counter requestCounter = Counter.builder("fizzbuzz_requests").description("count of fizzbuzz requests").tags(INT1_TAG, String.valueOf(int1), INT2_TAG,
@@ -77,7 +72,7 @@ public class FizzBuzzController {
         requestCounter.increment();
         List<String> result;
         try {
-            // Verify
+            //If it's a string or a number that can not be storage in a int it will throw an exception
             int number1Int = Integer.parseInt(int1);
             int number2Int = Integer.parseInt(int2);
             int limitInt = Integer.parseInt(limit);
@@ -86,7 +81,7 @@ public class FizzBuzzController {
         } catch (FizzbuzzParamException e) {
             throw new WrongParamRequestException(e.getMessage());
         } catch (NumberFormatException e) {
-            LOG.error("Error of format of parameter",e);
+            LOG.error("Error of format of parameter", e);
             throw new WrongParamRequestException("Problem with input parameter please check the parameters");
         }
         return ResponseEntity.ok(result);

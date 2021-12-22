@@ -8,6 +8,6 @@ docker build --build-arg FB_VERSION="1.0-SNAPSHOT" --build-arg=SPRING_PROFILE="l
 
 # prometheus
 sudo mkdir /etc/prometheus
-sudo cp prometheus.xml /etc
+sudo cp prometheus.yml /etc
 sudo cp  docker-compose.xml /etc
 

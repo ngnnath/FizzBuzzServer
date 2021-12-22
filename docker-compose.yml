@@ -11,20 +11,25 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
     ports:
-      - '9090:9090'
+      - ${PROMETHEUS_PORT}:9090
     restart: always
   grafana:
-    image: grafana/grafana:7.0.3
-    volumes: 
+    image: grafana/grafana:7.1.1
+    volumes:
       - grafana_data:/var/lib/grafana
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     depends_on:
       - prometheus
     ports:
-      - "3000:3000"
+      - ${GRAFANA_PORT}:3000
   fizzbuzz:
-    image: ngnnath/fizzbuzzserver:1.0-SNAPSHOT
+    build:
+      context: .
+    image: ngnnath/fizzbuzzserver:${FB_VERSION}
+    environment:
+      - SPRING_PROFILE=${SPRING_PROFILE}
+      - FB_PORT=${FB_PORT}
     ports:
-      - "8081:8081"
-
+      - ${FB_PORT_LOCAL}:8081
+    container_name: fizzbuzz_server

@@ -1,5 +1,8 @@
-logging:
-  level:
-    .: error
-    org.springframework: ERROR
-    com.mkyong: ERROR
+spring:
+  mvc:
+    throw-exception-if-no-handler-found: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus

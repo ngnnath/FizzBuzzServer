@@ -15,16 +15,16 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @RestControllerAdvice
 public class CustomAdvice {
 
-	@ExceptionHandler(NoHandlerFoundException.class)
-	public ResponseEntity<Object> handlerWrongPathException(NoHandlerFoundException e) {
-		return new ResponseEntity<>("Wrong request, please check the available requests in http://localhost:8081/swagger-ui.html", new HttpHeaders(),
-			HttpStatus.BAD_REQUEST);
-	}
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseEntity<Object> handlerWrongPathException(NoHandlerFoundException e) {
+        return new ResponseEntity<>("Wrong request, please check the available requests in http://localhost:8081/swagger-ui.html", new HttpHeaders(),
+                HttpStatus.BAD_REQUEST);
+    }
 
-	@ExceptionHandler(WrongParamRequestException.class)
-	public ResponseEntity<Object> handlerParamsException(WrongParamRequestException e) {
-		return new ResponseEntity<>(e.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
-	}
+    @ExceptionHandler(WrongParamRequestException.class)
+    public ResponseEntity<Object> handlerParamsException(WrongParamRequestException e) {
+        return new ResponseEntity<>(e.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    }
 
 }
 
