@@ -1,12 +1,15 @@
-#FizzBuzz
-___
+# FizzBuzz
 **Description:**
 
 Exercise: Write a simple fizz-buzz REST server. 
 
 The original fizz-buzz consists in writing all numbers from 1 to 100, and just replacing all multiples of 3 by "fizz", all multiples of 5 by "buzz", and all multiples of 15 by "fizzbuzz". The output would look like this: "1,2,fizz,4,buzz,fizz,7,8,fizz,buzz,11,fizz,13,14,fizzbuzz,16,...".
 
-
+Develop with the following configuration :
+ - Java 1.8.0_241
+ - Maven 3.6.0
+ - Docker 20.10.5
+ 
 ## Summary
 1. [Build the Docker image](#dockerImage)
 2. [Run Docker-compose](#docker-compose)
@@ -69,8 +72,7 @@ this docker-compose file create 3 containers :
 
 To see if it works I created a script that execute some requests and create metrics.
 
-____
-#Show the metrics in grafana
+## Show the metrics in grafana
 
 <a name="metrics"><a>
 
@@ -88,21 +90,20 @@ Please connect with login admin and password admin.
 
 - Import the dashboard by taking the grafana Json in the repository
 
-___
+
 ## Endpoints of the service
 
 <a name="endpoints"><a>
 
 - http://localhost:8081/fizzbuzz/grafana :
   You can access to the dashboard by the following url
-
+  
 - http://localhost:8081/fizzbuzz/{int1}/{int2}/{limit}/{str1}/{str2}
   The request will return in a list of string
 - http://localhost:8081/fizzbuzz/MostRequestCalled : will return the most request call with parameter if there are equally ranked requests it will display all
   of them.
   
 - http://localhost:8081/swagger-ui.html : the documentation of the app.
-___
 
 
 
