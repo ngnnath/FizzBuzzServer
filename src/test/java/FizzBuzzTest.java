@@ -1,34 +1,30 @@
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import engine.errors.FizzbuzzParamException;
+import engine.services.FizzBuzz;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
-import engine.services.FizzBuzz;
-import engine.errors.FizzbuzzParamException;
-import io.micrometer.core.instrument.MeterRegistry;
-import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * FizzBuzzControllerTest.
  */
 public class FizzBuzzTest {
 
+    final private static SimpleMeterRegistry METER_REGISTRY = new SimpleMeterRegistry();
+
     /**
      * FIZZBUZZ.
      */
     private static FizzBuzz FIZZBUZZ;
 
-
     @BeforeAll
     public static void init() {
-        final SimpleMeterRegistry meterRegistry = new SimpleMeterRegistry();
-        FIZZBUZZ = new FizzBuzz(meterRegistry);
+        FIZZBUZZ = new FizzBuzz(METER_REGISTRY);
     }
 
     /**
@@ -38,6 +34,8 @@ public class FizzBuzzTest {
     public void runFizzbuzzlimitIntTest() {
         int limit = Integer.MAX_VALUE + 1;
         assertThrows(FizzbuzzParamException.class, () -> FIZZBUZZ.fizzBuzz(1, 20, limit, "str1", "str2"));
+        Counter counter = METER_REGISTRY.find("fizzbuzz_error_parameter").counter();
+        assertEquals(counter.count(), 1.0);
 
     }
 
@@ -83,6 +81,7 @@ public class FizzBuzzTest {
         List<String> result = FIZZBUZZ.fizzBuzz(2, 5, 10, "str1", "str2");
         assertFalse(result.isEmpty());
         assertArrayEquals(resultExpected.toArray(), result.toArray());
+
 
     }
 }
