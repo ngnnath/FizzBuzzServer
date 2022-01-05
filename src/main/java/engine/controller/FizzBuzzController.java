@@ -58,7 +58,7 @@ public class FizzBuzzController {
      */
     @Operation(summary = "run fizzbuzz and get the result in a list")
     @Timed(value = "fizzbuzz.request", extraTags = {"name", "fizzbuzzTimer"})
-    @GetMapping(value = "/fizzbuzz/{int1}/{int2}/{limit}/{str1}/{str2}")
+    @GetMapping(value = "/fizzbuzz/int1/{int1}/int2/{int2}/limit/{limit}/str1/{str1}/str2/{str2}")
     public ResponseEntity<List<String>> runFizzbuzz(
             @Parameter(description = "First factor") @PathVariable(value = "int1") String int1,
             @Parameter(description = "Second factor") @PathVariable(value = "int2") String int2,
