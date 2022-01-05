@@ -15,6 +15,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -70,6 +72,18 @@ public class FizzBuzzControllerTest {
         MvcResult response = this.mockMvc.perform(get("/fizzbuzz/int1/str/int2/2/limit/10/str1/fizz/str2/buzz")).
                 andDo(MockMvcResultHandlers.print()).andExpect(status().isBadRequest()).andReturn();
         assertEquals("Problem with input parameter please check the parameters", response.getResponse().getContentAsString());
+
+    }
+
+    @Test
+    public void testControllerWithGoodParam() throws Exception {
+        List resultExpected = Arrays.asList("1", "fizz", "3", "fizz", "buzz", "fizz", "7", "fizz", "9", "fizzbuzz");
+        MvcResult response = this.mockMvc.perform(get("/fizzbuzz/int1/2/int2/5/limit/10/str1/fizz/str2/buzz")).
+                andDo(MockMvcResultHandlers.print()).andExpect(status().isOk()).andReturn();
+        String json = response.getResponse().getContentAsString();
+        Gson gson = new Gson();
+        List<String> listResult = Arrays.asList(gson.fromJson(json, String[].class));
+        assertEquals(resultExpected,listResult);
     }
 
     @Test

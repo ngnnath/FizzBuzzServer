@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,7 +55,7 @@ public class FizzBuzzController {
      * @param limit limit number
      * @param str1  First string to replace numbers multiple of int 1
      * @param str2  Second string to replace numbers multiple of int 2
-     * @return
+     * @return list of string from fizzbuzz method
      */
     @Operation(summary = "run fizzbuzz and get the result in a list")
     @Timed(value = "fizzbuzz.request", extraTags = {"name", "fizzbuzzTimer"})
@@ -84,7 +85,10 @@ public class FizzBuzzController {
             LOG.error("Error of format of parameter", e);
             throw new WrongParamRequestException("Problem with input parameter please check the parameters");
         }
-        return ResponseEntity.ok(result);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_TYPE,"application/json");
+
+        return ResponseEntity.ok().headers(headers).body(result);
     }
 
     @Operation(summary = "Get the grafana dashboard")
@@ -118,6 +122,8 @@ public class FizzBuzzController {
             result.add(CounterRequest.counterToCounterRequest(c));
         }
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_TYPE,"application/json");
         return ResponseEntity.ok(result);
     }
 
