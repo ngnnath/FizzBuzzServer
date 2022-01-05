@@ -98,7 +98,7 @@ Please connect with login admin and password admin.
 - http://localhost:8081/fizzbuzz/grafana :
   You can access to the dashboard by the following url
   
-- http://localhost:8081/fizzbuzz/{int1}/{int2}/{limit}/{str1}/{str2}
+- http://localhost:8081/fizzbuzz/int1/{int1}/int2/{int2}/limit/{limit}/str1/{str1}/str2/{str2}
   The request will return in a list of string
 - http://localhost:8081/fizzbuzz/MostRequestCalled : will return the most request call with parameter if there are equally ranked requests it will display all
   of them.

@@ -39,21 +39,21 @@ public class FizzBuzzControllerTest {
 
     @Test
     public void testcontrollerincrementCounter() throws Exception {
-        this.mockMvc.perform(get("/fizzbuzz/2/5/10/str1/str2"));
-        final Counter requestsCounter = registry.find("fizzbuzz_requests").tags(INT1_TAG, "2", INT2_TAG, "5", LIMIT_TAG, "10", STR1_TAG, "str1", STR2_TAG, "str2").counter();
+        this.mockMvc.perform(get("/fizzbuzz/int1/2/int2/5/limit/10/str1/fizz/str2/buzz"));
+        final Counter requestsCounter = registry.find("fizzbuzz_requests").tags(INT1_TAG, "2", INT2_TAG, "5", LIMIT_TAG, "10", STR1_TAG, "fizz", STR2_TAG, "buzz").counter();
         assertEquals(requestsCounter.count(), 1.0);
     }
 
     @Test
     public void testcontrollerWithFirstParamTo0() throws Exception {
-        MvcResult response = this.mockMvc.perform(get("/fizzbuzz/0/2/10/str1/str2")).
+        MvcResult response = this.mockMvc.perform(get("/fizzbuzz/int1/0/int2/2/limit/10/str1/fizz/str2/buzz")).
                 andDo(MockMvcResultHandlers.print()).andExpect(status().isBadRequest()).andReturn();
         assertEquals("first number should be different of 0", response.getResponse().getContentAsString());
     }
 
     @Test
     public void testcontrollerWithSecondParamTo0() throws Exception {
-        MvcResult response = this.mockMvc.perform(get("/fizzbuzz/1/0/10/str1/str2")).
+        MvcResult response = this.mockMvc.perform(get("/fizzbuzz/int1/1/int2/0/limit/10/str1/fizz/str2/buzz")).
                 andDo(MockMvcResultHandlers.print()).andExpect(status().isBadRequest()).andReturn();
         assertEquals("second number should different of 0", response.getResponse().getContentAsString());
     }
@@ -67,7 +67,7 @@ public class FizzBuzzControllerTest {
 
     @Test
     public void testControllerWithParamString() throws Exception {
-        MvcResult response = this.mockMvc.perform(get("/fizzbuzz/str/2/10/str1/str2")).
+        MvcResult response = this.mockMvc.perform(get("/fizzbuzz/int1/str/int2/2/limit/10/str1/fizz/str2/buzz")).
                 andDo(MockMvcResultHandlers.print()).andExpect(status().isBadRequest()).andReturn();
         assertEquals("Problem with input parameter please check the parameters", response.getResponse().getContentAsString());
     }
@@ -81,10 +81,10 @@ public class FizzBuzzControllerTest {
     @Test
     public void testcontrollerMostRequest() throws Exception {
         for (int i = 0; i <= 4; i++) {
-            this.mockMvc.perform(get("/fizzbuzz/3/5/10/str1/str2"));
+            this.mockMvc.perform(get("/fizzbuzz/int1/3/int2/5/limit/10/str1/fizz/str2/buzz"));
         }
         for (int i = 0; i <= 2; i++) {
-            this.mockMvc.perform(get("/fizzbuzz/2/4/10/str1/str2"));
+            this.mockMvc.perform(get("/fizzbuzz/int1/2/int2/4/limit/10/str1/toto/str2/tata"));
         }
         MvcResult response = this.mockMvc.perform(get("/fizzbuzz/RequestMostCalled")).
                 andDo(MockMvcResultHandlers.print()).andExpect(status().isOk()).andReturn();
@@ -96,8 +96,8 @@ public class FizzBuzzControllerTest {
         assertEquals("3", request.getInt1());
         assertEquals("5", request.getInt2());
         assertEquals("10", request.getLimit());
-        assertEquals("str1", request.getStr1());
-        assertEquals("str2", request.getStr2());
+        assertEquals("fizz", request.getStr1());
+        assertEquals("buzz", request.getStr2());
 
 
     }
